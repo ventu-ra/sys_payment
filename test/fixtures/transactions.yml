@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  card_number: MyString
+  amount: 1
+  currency: MyString
+  status: MyString
+  message: MyString
+
+two:
+  card_number: MyString
+  amount: 1
+  currency: MyString
+  status: MyString
+  message: MyString
