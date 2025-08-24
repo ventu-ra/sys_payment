@@ -1,0 +1,15 @@
+POST http://127.0.0.1:3000/transactions
+Content-Type: application/json
+
+{
+  "transaction": {
+    "card_number": "5555556355564617",
+    "amount": 100,
+    "currency": "BRL"
+  }
+}
+
+
+###
+
+GET http://127.0.0.1:3000/transactions
