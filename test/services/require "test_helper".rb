@@ -1,61 +1,62 @@
 require "test_helper"
+require_relative "../app/models/transaction" # ajuste o path conforme seu projeto
 
-class TransactionTest < ActiveSupport::TestCase
+class TransactionTest < Minitest::Test
   def setup
     @valid_card = "5555556355564617" # Mastercard válido
   end
 
-  test "transação válida deve ser aprovada" do
+  def test_transacao_valida
     transaction = Transaction.new(
       card_number: @valid_card,
       amount: 100,
       currency: "BRL"
     )
-    assert transaction.save
+    transaction.process
     assert_equal "approved", transaction.status
     assert_equal "Transaction approved", transaction.message
   end
 
-  test "deve rejeitar valor negativo" do
+  def test_cartao_invalido
+    transaction = Transaction.new(
+      card_number: "1234567890123456",
+      amount: 100,
+      currency: "BRL"
+    )
+    transaction.process
+    assert_equal "declined", transaction.status
+    assert_includes transaction.message, "Invalid credit card number"
+  end
+
+  def test_valor_negativo
     transaction = Transaction.new(
       card_number: @valid_card,
       amount: -50,
-      currency: "USD"
+      currency: "BRL"
     )
-    transaction.save
+    transaction.process
     assert_equal "declined", transaction.status
     assert_includes transaction.message, "Invalid transaction amount"
   end
 
-  test "deve rejeitar moeda inválida" do
+  def test_moeda_invalida
     transaction = Transaction.new(
       card_number: @valid_card,
       amount: 100,
       currency: "JPY"
     )
-    transaction.save
+    transaction.process
     assert_equal "declined", transaction.status
     assert_includes transaction.message, "Invalid currency"
   end
 
-  test "deve rejeitar número de cartão inválido" do
-    transaction = Transaction.new(
-      card_number: "1234567890123456",
-      amount: 100,
-      currency: "EUR"
-    )
-    transaction.save
-    assert_equal "declined", transaction.status
-    assert_includes transaction.message, "Invalid credit card number"
-  end
-
-  test "deve acumular múltiplos erros" do
+  def test_multiplos_erros
     transaction = Transaction.new(
       card_number: "1234567890123456",
       amount: -10,
       currency: "JPY"
     )
-    transaction.save
+    transaction.process
     assert_equal "declined", transaction.status
     assert_includes transaction.message, "Invalid credit card number"
     assert_includes transaction.message, "Invalid transaction amount"
