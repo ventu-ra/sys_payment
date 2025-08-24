@@ -32,13 +32,13 @@ Content-Type: application/json
 }
 
 
-### POST Transactions  "currency": "EUR"
+### POST Transactions  "currency": "EUR" -> Invalid transaction declined
 POST http://127.0.0.1:3000/transactions
 Content-Type: application/json
 
 {
   "card_number": "5555556355564617",
-  "amount": 20,
+  "amount": 0,
   "currency": "EUR"
 }
 
