@@ -1,15 +1,47 @@
+# POST http://127.0.0.1:3000/transactions
+# Content-Type: application/json
+
+# {
+#   "transaction": {
+#     "card_number": "5555556355564617",
+#     "amount": 100,
+#     "currency": "BRL"
+#   }
+# }
+
+
+### POST Transactions  "currency": "BRL"
 POST http://127.0.0.1:3000/transactions
 Content-Type: application/json
 
 {
-  "transaction": {
-    "card_number": "5555556355564617",
-    "amount": 100,
-    "currency": "BRL"
-  }
+  "card_number": "5555556355564617",
+  "amount": 100,
+  "currency": "BRL"
 }
 
 
-###
+### POST Transactions  "currency": "USD"
+POST http://127.0.0.1:3000/transactions
+Content-Type: application/json
 
+{
+  "card_number": "5555556355564617",
+  "amount": 200,
+  "currency": "USD"
+}
+
+
+### POST Transactions  "currency": "EUR"
+POST http://127.0.0.1:3000/transactions
+Content-Type: application/json
+
+{
+  "card_number": "5555556355564617",
+  "amount": 20,
+  "currency": "EUR"
+}
+
+
+### GET ALL Transactins
 GET http://127.0.0.1:3000/transactions
